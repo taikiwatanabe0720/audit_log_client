@@ -1,18 +1,23 @@
 // docker run -p 8000:8000 amazon/dynamodb-local
-const { DynamoDBClient, PutItemCommand, QueryCommand } = require("@aws-sdk/client-dynamodb");
+import { DynamoDBClient, PutItemCommand, QueryCommand, DynamoDBClientConfig } from '@aws-sdk/client-dynamodb';
+// import { Credentials } from "@aws-sdk/types";
+// import { fromEnv } from "@aws-sdk/credential-providers";
+import { QueryParamsType } from '../types/query-type';
 
-const client = new DynamoDBClient({
-  region: "us-west-2",
-  endpoint: "http://localhost:8000"
-});
-
-class dynamoCommand {
-  private client: any;
-  constructor() {
+class DynamoCommand {
+  client: any;
+  constructor(
+    credentials: any
+  ) {
+    const config: DynamoDBClientConfig = {
+      region: "your-region",
+      credentials: credentials,
+    };
+    const client = new DynamoDBClient(config);
     this.client = client
   }
 
-  async filterCommand (queryParams: any) {
+  async filterCommand (queryParams: QueryParamsType) {
     console.log(queryParams)
     const params = {
       TableName: queryParams.TableName,
@@ -25,20 +30,22 @@ class dynamoCommand {
       }
     };
 
-    const exec = async () => {
-      try {
-        const data = client.send(new QueryCommand(params));
-        console.log(data.Items);
-      } catch (err) {
-        console.error("Error executing query:", err);
-      }
+    try {
+      const data = await this.client.send(new QueryCommand(params));
+      console.log(data.Items);
+    } catch (err) {
+      console.log("Error executing query:", err);
     }
-    exec();
   }
 
 
-  async putCommand (params: any) {
-
+  async putCommand (putParams: any) {
+    try {
+      const data = await this.client.send(new PutItemCommand(putParams))
+      console.log("Item registered", data);
+    } catch (err) {
+      console.log("Error", err);
+    }
   }
 
   async scanCommand (params: any) {
@@ -46,4 +53,4 @@ class dynamoCommand {
   }
 }
 
-export default dynamoCommand;
+export default DynamoCommand;

@@ -1,8 +1,10 @@
-declare class dynamoCommand {
-    private client;
-    constructor();
-    filterCommand(queryParams: any): Promise<void>;
-    putCommand(params: any): Promise<void>;
+import { Credentials } from "@aws-sdk/types";
+import { QueryParamsType } from '../types/query-type';
+declare class DynamoCommand {
+    client: any;
+    constructor(credentials: Credentials);
+    filterCommand(queryParams: QueryParamsType): Promise<void>;
+    putCommand(putParams: any): Promise<void>;
     scanCommand(params: any): Promise<void>;
 }
-export default dynamoCommand;
+export default DynamoCommand;
