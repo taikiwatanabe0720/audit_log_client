@@ -1,5 +1,5 @@
 import DynamoCommand from './clients/dynamoCommand'
 
-export {
-  DynamoCommand
-}
+console.log("=================")
+console.log(DynamoCommand)
+export { DynamoCommand };
