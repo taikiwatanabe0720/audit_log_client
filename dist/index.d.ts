@@ -1,2 +1,2 @@
-import dynamoCommand from './clients/dynamoCommands';
-export { dynamoCommand };
+import DynamoCommand from './clients/dynamoCommand';
+export { DynamoCommand };

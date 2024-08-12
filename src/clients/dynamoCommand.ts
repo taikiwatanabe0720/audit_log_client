@@ -7,10 +7,11 @@ import { QueryParamsType } from '../types/query-type';
 class DynamoCommand {
   client: any;
   constructor(
-    credentials: any
+    credentials: any,
+    region: string
   ) {
     const config: DynamoDBClientConfig = {
-      region: "your-region",
+      region: region,
       credentials: credentials,
     };
     const client = new DynamoDBClient(config);

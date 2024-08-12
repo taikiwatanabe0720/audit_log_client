@@ -1,5 +1,5 @@
-import dynamoCommand from './clients/dynamoCommands'
+import DynamoCommand from './clients/dynamoCommand'
 
 export {
-  dynamoCommand
+  DynamoCommand
 }
